@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      background: black;
+      overflow: hidden;
+      color: white;
+      text-align: center;
+      padding-top: 50px;
+    }
+
+    /* Astronaut floating */
+    @keyframes floatAstronaut {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-25px); }
+      100% { transform: translateY(0); }
+    }
+
+    /* Rocket flying */
+    @keyframes rocketFly {
+      0% { transform: translate(0,0); }
+      100% { transform: translate(200px,-200px); }
+    }
+
+    /* Stars twinkle */
+    @keyframes twinkle {
+      0% { opacity: 0.3; }
+      50% { opacity: 1; }
+      100% { opacity: 0.3; }
+    }
+
+    .astronaut {
+      width: 150px;
+      animation: floatAstronaut 3s infinite ease-in-out;
+    }
+
+    .rocket {
+      width: 120px;
+      position: absolute;
+      left: 50px;
+      bottom: 50px;
+      animation: rocketFly 4s infinite linear;
+    }
+
+    .star {
+      width: 20px;
+      position: absolute;
+      animation: twinkle 2s infinite ease-in-out;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Space Animation</h1>
+
+  <img src="https://pngimg.com/uploads/astronaut/astronaut_PNG69.png" class="astronaut">
+
+  <img src="https://pngimg.com/uploads/rocket/rocket_PNG1323.png" class="rocket">
+
+  <img src="https://pngimg.com/uploads/star/star_PNG76903.png" class="star" style="top:20%; left:80%;">
+  <img src="https://pngimg.com/uploads/star/star_PNG76903.png" class="star" style="top:60%; left:30%;">
+  <img src="https://pngimg.com/uploads/star/star_PNG76903.png" class="star" style="top:40%; left:50%;">
+
+</body>
+</html>
