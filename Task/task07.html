@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Random Joke Generator</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            padding: 20px;
+            background: #f6f6f6;
+            text-align: center;
+        }
+
+        #jokeBox {
+            background: white;
+            width: 400px;
+            margin: auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+
+        #nextBtn {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-top: 15px;
+            border: none;
+            background: #007bff;
+            color: white;
+            cursor: pointer;
+            border-radius: 6px;
+        }
+
+        #nextBtn:disabled {
+            background: gray;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Random Joke Generator</h2>
+
+<div id="jokeBox">
+    <h3 id="setup">Click “Next Joke”</h3>
+    <p id="punchline"></p>
+</div>
+
+<button id="nextBtn" onclick="fetchJoke()">Next Joke</button>
+
+<script>
+    const setupEl = document.getElementById("setup");
+    const punchlineEl = document.getElementById("punchline");
+    const nextBtn = document.getElementById("nextBtn");
+
+    function fetchJoke() {
+        nextBtn.disabled = true;  
+        setupEl.textContent = "Loading joke...";
+        punchlineEl.textContent = "";
+
+        fetch("https://official-joke-api.appspot.com/random_joke")
+            .then(response => response.json())
+            .then(data => {
+                setupEl.textContent = data.setup;
+                punchlineEl.textContent = data.punchline;
+                nextBtn.disabled = false;
+            })
+            .catch(error => {
+                setupEl.textContent = "Oops! Something went wrong.";
+                punchlineEl.textContent = "";
+                console.error(error);
+                nextBtn.disabled = false;
+            });
+    }
+</script>
+
+</body>
+</html>
