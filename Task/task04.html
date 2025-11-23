@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Form Validation App</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            padding: 20px;
+            background: #f4f4f4;
+        }
+        .form-container {
+            width: 350px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 6px 0;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            height: 16px;  
+        }
+
+        .success {
+            border: 2px solid green !important;
+        }
+
+        .fail {
+            border: 2px solid red !important;
+        }
+
+        button {
+            padding: 10px;
+            width: 100%;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+
+    <h2>Registration Form</h2>
+
+    <form id="regForm">
+
+        <label>Name</label>
+        <input type="text" id="nameInput">
+        <div id="nameError" class="error"></div>
+
+        <label>Email</label>
+        <input type="text" id="emailInput">
+        <div id="emailError" class="error"></div>
+
+        <label>Password</label>
+        <input type="password" id="passInput">
+        <div id="passError" class="error"></div>
+
+        <button type="submit">Register</button>
+    </form>
+
+</div>
+
+<script>
+    const form = document.getElementById("regForm");
+
+    const nameInput = document.getElementById("nameInput");
+    const emailInput = document.getElementById("emailInput");
+    const passInput = document.getElementById("passInput");
+
+    const nameError = document.getElementById("nameError");
+    const emailError = document.getElementById("emailError");
+    const passError = document.getElementById("passError");
+
+    form.addEventListener("submit", function(event) {
+        event.preventDefault(); 
+
+        let valid = true;
+
+        if (nameInput.value.trim() === "") {
+            nameError.textContent = "Name is required";
+            nameInput.classList.add("fail");
+            nameInput.classList.remove("success");
+            valid = false;
+        } else {
+            nameError.textContent = "";
+            nameInput.classList.add("success");
+            nameInput.classList.remove("fail");
+        }
+
+        if (emailInput.value.trim() === "") {
+            emailError.textContent = "Email is required";
+            emailInput.classList.add("fail");
+            emailInput.classList.remove("success");
+            valid = false;
+        } 
+        else if (!emailInput.value.includes("@")) {
+            emailError.textContent = "Enter a valid email";
+            emailInput.classList.add("fail");
+            emailInput.classList.remove("success");
+            valid = false;
+        } 
+        else {
+            emailError.textContent = "";
+            emailInput.classList.add("success");
+            emailInput.classList.remove("fail");
+        }
+
+        if (passInput.value.trim() === "") {
+            passError.textContent = "Password is required";
+            passInput.classList.add("fail");
+            passInput.classList.remove("success");
+            valid = false;
+        } 
+        else if (passInput.value.length < 8) {
+            passError.textContent = "Password must be at least 8 characters";
+            passInput.classList.add("fail");
+            passInput.classList.remove("success");
+            valid = false;
+        } 
+        else {
+            passError.textContent = "";
+            passInput.classList.add("success");
+            passInput.classList.remove("fail");
+        }
+
+        if (valid) {
+            alert("Form submitted successfully!");
+        }
+    });
+</script>
+
+</body>
+</html>
