@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DOM Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<style>
+    body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #111;
+    font-family: Arial;
+}
+
+.calculator {
+    width: 280px;
+    background: #222;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+}
+
+.display {
+    height: 60px;
+    background: #000;
+    color: #0f0;
+    font-size: 28px;
+    text-align: right;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    overflow: hidden;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.btn {
+    padding: 18px;
+    font-size: 20px;
+    border: none;
+    cursor: pointer;
+    background: #444;
+    color: #fff;
+    border-radius: 10px;
+    transition: 0.2s;
+}
+
+.btn:hover {
+    background: #666;
+}
+
+.zero {
+    grid-column: span 2;
+}
+
+.operator {
+    background: #007bff;
+}
+
+.operator:hover {
+    background: #339cff;
+}
+
+.equals {
+    background: #28a745;
+}
+
+.equals:hover {
+    background: #4cd964;
+}
+
+</style>
+<body>
+
+<div class="calculator">
+    <div id="display" class="display">0</div>
+
+    <div class="buttons">
+        <button class="btn clear">C</button>
+        <button class="btn back">⌫</button>
+        <button class="btn operator">/</button>
+        <button class="btn operator">*</button>
+
+        <button class="btn num">7</button>
+        <button class="btn num">8</button>
+        <button class="btn num">9</button>
+        <button class="btn operator">-</button>
+
+        <button class="btn num">4</button>
+        <button class="btn num">5</button>
+        <button class="btn num">6</button>
+        <button class="btn operator">+</button>
+
+        <button class="btn num">1</button>
+        <button class="btn num">2</button>
+        <button class="btn num">3</button>
+        <button class="btn equals">=</button>
+
+        <button class="btn zero num">0</button>
+        <button class="btn num">.</button>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
+<script>
+    const display = document.getElementById("display");
+let expression = "";
+
+document.querySelectorAll(".btn").forEach(btn => {
+    btn.addEventListener("click", function () {
+        handleInput(this.innerText);
+    });
+});
+
+document.addEventListener("keydown", (e) => {
+    const key = e.key;
+
+    if (!isNaN(key) || "+-*/.".includes(key)) {
+        handleInput(key);
+    } 
+    else if (key === "Enter") {
+        handleInput("=");
+    }
+    else if (key === "Backspace") {
+        expression = expression.slice(0, -1);
+        updateDisplay();
+    }
+    else if (key === "Escape") {
+        expression = "";
+        updateDisplay();
+    }
+});
+
+function handleInput(value) {
+    if (value === "C") {
+        expression = "";
+        updateDisplay();
+        return;
+    }
+
+    if (value === "⌫") {
+        expression = expression.slice(0, -1);
+        updateDisplay();
+        return;
+    }
+
+    if (value === "=") {
+        try {
+            const result = eval(expression);
+            expression = expression + " = " + result;
+        } catch {
+            expression = "Error";
+        }
+        updateDisplay(true);
+        return;
+    }
+
+    expression += value;
+    updateDisplay();
+}
+
+function updateDisplay(reset = false) {
+    display.textContent = expression || "0";
+    if (reset) {
+        setTimeout(() => {
+            expression = "";
+        }, 1000);
+    }
+}
+
+</script>
